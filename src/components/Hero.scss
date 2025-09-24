@@ -37,7 +37,7 @@
       display: flex;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
 
       .btn-primary {
         background: $primary-color;
@@ -62,6 +62,39 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+
+    .hero-contacts {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+
+      a {
+        text-decoration: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: 0.3s;
+
+        &.btn-whatsapp {
+          background: #25D366;
+          color: $white;
+
+          &:hover {
+            background: darken(#25D366, 10%);
+          }
+        }
+
+        &.btn-email {
+          background: $primary-color;
+          color: $white;
+
+          &:hover {
+            background: $secondary-color;
+          }
         }
       }
     }
@@ -94,7 +127,8 @@
         font-size: 1rem;
       }
 
-      .hero-buttons {
+      .hero-buttons,
+      .hero-contacts {
         flex-direction: column;
         gap: 1rem;
       }

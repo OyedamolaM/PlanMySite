@@ -122,15 +122,17 @@ export default function Plans() {
           ))}
         </ul>
 
+        {/* Domain toggle switch */}
         {plan.domainPriceNGN !== plan.basePriceNGN && (
-          <div className="domain-toggle">
-            <label>
+          <div className="domain-toggle-switch">
+            <span>Add Custom Domain</span>
+            <label className="switch">
               <input
                 type="checkbox"
                 checked={domainSelected[index] || false}
                 onChange={() => toggleDomain(index)}
               />
-              Add Custom Domain
+              <span className="slider round"></span>
             </label>
           </div>
         )}

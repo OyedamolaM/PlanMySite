@@ -1,0 +1,39 @@
+@import "../styles/variables.scss";
+
+.cta {
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem;
+
+  .cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .btn-primary {
+      background: white;
+      color: $primary-color;
+      padding: 0.8rem 1.6rem;
+      border-radius: 6px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+
+      &:hover {
+        background: lighten(white, 10%);
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

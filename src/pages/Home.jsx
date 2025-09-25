@@ -7,6 +7,7 @@ import WhyChoose from "../components/WhyChoose";
 import Portfolio from "../components/Portfolio";
 import FAQ from "../components/FAQ";
 import About from "../components/About";
+import Contact from "../components/Contact";
 
 export default function Home() {
   return (
@@ -19,8 +20,8 @@ export default function Home() {
       <Testimonials />
       <Plans />
       <FAQ />
-      
       <CTA />
+      <Contact />
     </>
   );
 }

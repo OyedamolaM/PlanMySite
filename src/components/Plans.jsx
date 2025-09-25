@@ -1,14 +1,14 @@
-import { useState } from 'react';
-import './Plans.scss';
+import { useState } from "react";
+import "./Plans.scss";
 
 const nairaPerDollar = 1505;
+const nairaPerPound = 1850; // example conversion rate
 
-// Personal / Micro Plans
 const personalPlans = [
   {
-    name: "Simple Website",
-    basePriceNGN: 50000,
-    domainPriceNGN: 110000,
+    title: "Simple Website",
+    basePrice: 50000,
+    domainPrice: 110000,
     features: [
       "1–2 Pages (can include blog)",
       "Responsive Design",
@@ -17,9 +17,9 @@ const personalPlans = [
     ],
   },
   {
-    name: "Portfolio Website",
-    basePriceNGN: 75000,
-    domainPriceNGN: 150000,
+    title: "Portfolio Website",
+    basePrice: 75000,
+    domainPrice: 150000,
     features: [
       "Single-page portfolio",
       "Responsive Design",
@@ -29,11 +29,10 @@ const personalPlans = [
   },
 ];
 
-// Business / Professional Plans
 const businessPlans = [
   {
-    name: "Starter",
-    priceNGN: 250000,
+    title: "Starter",
+    price: 250000,
     features: [
       "Up to 5 Pages",
       "Responsive Design",
@@ -44,8 +43,8 @@ const businessPlans = [
     ],
   },
   {
-    name: "Business",
-    priceNGN: 500000,
+    title: "Business",
+    price: 500000,
     features: [
       "Up to 10 Pages",
       "Custom Design",
@@ -57,8 +56,8 @@ const businessPlans = [
     ],
   },
   {
-    name: "Enterprise",
-    priceNGN: 1000000,
+    title: "Enterprise",
+    price: 1000000,
     features: [
       "Unlimited Pages",
       "Fully Custom Design",
@@ -70,8 +69,8 @@ const businessPlans = [
     ],
   },
   {
-    name: "Premium",
-    priceNGN: 2000000,
+    title: "Premium",
+    price: 2000000,
     features: [
       "Unlimited Pages & Websites",
       "Fully Custom Advanced Design",
@@ -81,122 +80,119 @@ const businessPlans = [
       "E-commerce & Custom Features",
       "Custom Domain",
     ],
-    premium: true,
+    highlight: true,
   },
 ];
 
 export default function Plans() {
-  const [currencyPersonal, setCurrencyPersonal] = useState('NGN');
-  const [currencyBusiness, setCurrencyBusiness] = useState('NGN');
-  const [domainSelected, setDomainSelected] = useState({}); // personal domain toggles
+  const [currencyPersonal, setCurrencyPersonal] = useState("NGN");
+  const [currencyBusiness, setCurrencyBusiness] = useState("NGN");
+  const [domainSelected, setDomainSelected] = useState({});
+
+  const cycleCurrency = (current) => {
+    if (current === "NGN") return "USD";
+    if (current === "USD") return "GBP";
+    return "NGN";
+  };
 
   const toggleCurrencyPersonal = () =>
-    setCurrencyPersonal(currencyPersonal === 'NGN' ? 'USD' : 'NGN');
-
+    setCurrencyPersonal(cycleCurrency(currencyPersonal));
   const toggleCurrencyBusiness = () =>
-    setCurrencyBusiness(currencyBusiness === 'NGN' ? 'USD' : 'NGN');
+    setCurrencyBusiness(cycleCurrency(currencyBusiness));
+  const toggleDomain = (index) =>
+    setDomainSelected({ ...domainSelected, [index]: !domainSelected[index] });
 
-  const toggleDomain = (index) => {
-    setDomainSelected({
-      ...domainSelected,
-      [index]: !domainSelected[index],
-    });
+  const formatPrice = (price, currency) => {
+    if (currency === "NGN") return `₦${price.toLocaleString()}`;
+    if (currency === "USD") return `$${Math.round(price / nairaPerDollar).toLocaleString()}`;
+    if (currency === "GBP") return `£${Math.round(price / nairaPerPound).toLocaleString()}`;
   };
 
   const renderPersonalPlanCard = (plan, index) => {
-    const priceNGN = domainSelected[index] ? plan.domainPriceNGN : plan.basePriceNGN;
-    const priceUSD = Math.round(priceNGN / nairaPerDollar);
-
+    const price = domainSelected[index] ? plan.domainPrice : plan.basePrice;
     return (
       <div key={index} className="plan-card">
-        <h3>{plan.name}</h3>
-        <p className="price">
-          {currencyPersonal === 'NGN'
-            ? `₦${priceNGN.toLocaleString()}`
-            : `$${priceUSD.toLocaleString()}`}
-        </p>
-
+        {plan.highlight && <div className="ribbon">Premium</div>}
+        <h4>{plan.title}</h4>
+        <p className="price">{formatPrice(price, currencyPersonal)}</p>
         <ul>
-          {plan.features.map((feature, idx) => (
-            <li key={idx}>{feature}</li>
+          {plan.features.map((f, j) => (
+            <li key={j}>{f}</li>
           ))}
         </ul>
 
-        {/* Domain toggle as switch */}
-        {plan.domainPriceNGN !== plan.basePriceNGN && (
-          <div className="domain-toggle">
-            <span>Add Custom Domain</span>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={domainSelected[index] || false}
-                onChange={() => toggleDomain(index)}
-              />
-              <span className="slider round"></span>
-            </label>
-          </div>
-        )}
+        <div className="plan-toggle">
+          <span>Add Domain</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={domainSelected[index] || false}
+              onChange={() => toggleDomain(index)}
+            />
+            <span className="slider"></span>
+          </label>
+        </div>
 
-        <a href="#contact" className="btn-primary">Get Started</a>
+        <button className="btn">Get Started</button>
       </div>
     );
   };
 
   const renderBusinessPlanCard = (plan, index) => {
-    const priceUSD = Math.round(plan.priceNGN / nairaPerDollar);
     return (
-      <div key={index} className={`plan-card ${plan.premium ? 'premium' : ''}`}>
-        {plan.premium && <div className="ribbon">Premium</div>}
-        <h3>{plan.name}</h3>
-        <p className="price">
-          {currencyBusiness === 'NGN'
-            ? `₦${plan.priceNGN.toLocaleString()}`
-            : `$${priceUSD.toLocaleString()}`}
-        </p>
+      <div key={index} className={`plan-card ${plan.highlight ? "highlight" : ""}`}>
+        {plan.highlight && <div className="ribbon">Premium</div>}
+        <h4>{plan.title}</h4>
+        <p className="price">{formatPrice(plan.price, currencyBusiness)}</p>
         <ul>
-          {plan.features.map((feature, idx) => (
-            <li key={idx}>{feature}</li>
+          {plan.features.map((f, j) => (
+            <li key={j}>{f}</li>
           ))}
         </ul>
-        <a href="#contact" className="btn-primary">Get Started</a>
+
+        <button className="btn">Get Started</button>
       </div>
     );
   };
 
   return (
-    <section className="plans" id="plans">
-      <div className="plans-header">
-        <h2>Our Pricing Plans</h2>
-        <p>Choose the plan that best fits your personal or business needs.</p>
-      </div>
+    <section className="plans-section" id="plans">
+      <h2>Our Pricing Plans</h2>
+      <p className="subtitle">
+        Choose the plan that best fits your personal or business needs.
+      </p>
 
-      {/* Personal Plans */}
-      <div className="plans-section">
-        <h3 className="plans-row-title">Personal / Single Websites</h3>
-        <div className="currency-switch personal-switch">
-          <label className="switch">
-            <input type="checkbox" onChange={toggleCurrencyPersonal} />
-            <span className="slider round"></span>
-          </label>
-          <span>{currencyPersonal}</span>
+      <div className="plan-cards">
+        {/* Personal Plans */}
+        <div className="plan-category">
+          <h3>Personal / Single Websites</h3>
+          <div className="plan-toggle">
+            <span>Currency</span>
+            <label className="switch">
+              <input type="checkbox" onChange={toggleCurrencyPersonal} />
+              <span className="slider"></span>
+            </label>
+            <span>{currencyPersonal}</span>
+          </div>
+          <div className="plans">
+            {personalPlans.map((plan, i) => renderPersonalPlanCard(plan, i))}
+          </div>
         </div>
-        <div className="plans-cards personal">
-          {personalPlans.map((plan, i) => renderPersonalPlanCard(plan, i))}
-        </div>
-      </div>
 
-      {/* Business Plans */}
-      <div className="plans-section">
-        <h3 className="plans-row-title">Business / Professional Plans</h3>
-        <div className="currency-switch business-switch">
-          <label className="switch">
-            <input type="checkbox" onChange={toggleCurrencyBusiness} />
-            <span className="slider round"></span>
-          </label>
-          <span>{currencyBusiness}</span>
-        </div>
-        <div className="plans-cards business">
-          {businessPlans.map((plan, i) => renderBusinessPlanCard(plan, i))}
+        {/* Business Plans */}
+        <div className="plan-category">
+          <h3>Business / Professional Plans</h3>
+          <div className="plan-toggle">
+            <span>Currency</span>
+            <label className="switch">
+              <input type="checkbox" onChange={toggleCurrencyBusiness} />
+              <span className="slider"></span>
+            </label>
+            <span>{currencyBusiness}</span>
+          </div>
+          <div className="plans">
+            {businessPlans.map((plan, i) => renderBusinessPlanCard(plan, i))}
+          </div>
         </div>
       </div>
     </section>

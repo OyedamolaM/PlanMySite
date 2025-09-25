@@ -40,9 +40,7 @@ export default function About() {
       { threshold: 0.3 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => {
       if (sectionRef.current) observer.unobserve(sectionRef.current);
@@ -64,6 +62,18 @@ export default function About() {
             Whether it’s a simple portfolio site or a full-scale business platform, we put in the
             work to make sure your website is tailored to your goals and audience.
           </p>
+
+          {/* Features */}
+          <div className="about-features">
+            <div className="feature">
+              <h3>Our Office</h3>
+              <p>Located in Lagos, Nigeria, our office is open to meet clients and discuss your projects in person.</p>
+            </div>
+            <div className="feature">
+              <h3>24/7 Support</h3>
+              <p>Our team is available online to answer questions and resolve issues anytime you need.</p>
+            </div>
+          </div>
 
           {/* Stats */}
           <div className="about-stats">

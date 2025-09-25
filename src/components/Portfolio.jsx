@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./Portfolio.scss";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -10,11 +10,11 @@ import "swiper/css/pagination";
 
 export default function Portfolio() {
   const projects = [
-    { title: "Portfolio Website", image: "/images/portfolio-project.png", link: "#" },
-    { title: "Pharmacy E-Commerce Store", image: "/images/savans-ecommerce.png", link: "#" },
+    { title: "Portfolio Website", image: "/images/portfolio-project.png", link: "https://amos-pride-radio-presenterportfolio.vercel.app/" },
+    { title: "Pharmacy E-Commerce Store", image: "/images/savans-ecommerce.png", link: "https://savans-pharmacy-website.vercel.app/" },
     { title: "Tech Startup Landing Page", image: "/images/startup-landing.jpg", link: "#" },
     { title: "Real Estate Agency Platform", image: "/images/real-estate.jpg", link: "#" },
-    { title: "Educational Platform", image: "/images/french-school.png", link: "#" },
+    { title: "Educational Platform", image: "/images/french-school.png", link: "https://top-francais.vercel.app/" },
   ];
 
   const swiperRef = useRef(null);
@@ -27,6 +27,16 @@ export default function Portfolio() {
     setIsBeginning(swiper.isBeginning);
     setIsEnd(swiper.isEnd);
   };
+
+  // Ensure navigation refs are set after first render
+  useEffect(() => {
+    if (swiperRef.current && prevRef.current && nextRef.current) {
+      swiperRef.current.params.navigation.prevEl = prevRef.current;
+      swiperRef.current.params.navigation.nextEl = nextRef.current;
+      swiperRef.current.navigation.init();
+      swiperRef.current.navigation.update();
+    }
+  }, [swiperRef.current, prevRef.current, nextRef.current]);
 
   return (
     <section className="portfolio" id="portfolio">
@@ -41,13 +51,10 @@ export default function Portfolio() {
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={30}
             slidesPerView={1}
-            navigation={{
-              prevEl: prevRef.current,
-              nextEl: nextRef.current,
-            }}
+            navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
             pagination={{ clickable: true }}
             autoplay={{ delay: 4000 }}
-            loop={false} // no infinite loop
+            loop={false}
             breakpoints={{
               768: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
@@ -55,16 +62,6 @@ export default function Portfolio() {
             onSlideChange={handleSlideChange}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
-
-              // Bind navigation after DOM is ready
-              setTimeout(() => {
-                if (prevRef.current && nextRef.current) {
-                  swiper.params.navigation.prevEl = prevRef.current;
-                  swiper.params.navigation.nextEl = nextRef.current;
-                  swiper.navigation.init();
-                  swiper.navigation.update();
-                }
-              });
             }}
             className="portfolio-swiper"
           >
@@ -83,7 +80,7 @@ export default function Portfolio() {
             ))}
           </Swiper>
 
-          {/* Custom arrows */}
+          {/* Custom navigation arrows */}
           <div
             ref={prevRef}
             className={`swiper-button-prev-custom ${isBeginning ? "swiper-button-disabled" : ""}`}

@@ -1,0 +1,103 @@
+@import "../styles/variables.scss";
+
+.faq {
+  padding: 4rem 2rem;
+  background: $white; // keep it clean (or use $light-bg if preferred)
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 2.25rem;
+
+    h2 {
+      font-family: $font-heading;
+      font-size: 2rem;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: $text-color;
+      font-size: 1rem;
+      margin: 0 auto;
+      max-width: 720px;
+    }
+  }
+
+  .faq-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+
+    .faq-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.06);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(250,250,250,1));
+      transition: box-shadow 0.25s;
+
+      &.open {
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      }
+
+      .faq-question {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 1rem 1.25rem;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        text-align: left;
+        font-family: $font-primary;
+        font-size: 1.02rem;
+        color: $text-color;
+
+        .icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 999px;
+          border: 1px solid rgba(0,0,0,0.06);
+          font-weight: 700;
+          color: $primary-color;
+        }
+      }
+
+      .faq-answer {
+        padding: 0 1.25rem 1rem 1.25rem;
+        color: $text-color;
+        line-height: 1.6;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(.4,0,.2,1);
+      }
+
+      &.open .faq-answer {
+        max-height: 400px; // large enough for answer content
+      }
+    }
+  }
+
+  @media (min-width: 800px) {
+    .faq-list {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 2.5rem 1rem;
+
+    .faq-header h2 { font-size: 1.6rem; }
+    .faq-item .faq-question { padding: 0.9rem; }
+    .faq-item .faq-answer { padding: 0 0.9rem 0.9rem; }
+  }
+}

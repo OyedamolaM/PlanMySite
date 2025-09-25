@@ -26,22 +26,6 @@ export default function Hero() {
               Email Us
             </a>
           </div>
-
-          {/* Hero Stats */}
-          <div className="hero-stats">
-            <div>
-              <h2>10+</h2>
-              <p>Years Experience</p>
-            </div>
-            <div>
-              <h2>200+</h2>
-              <p>Projects Delivered</p>
-            </div>
-            <div>
-              <h2>50+</h2>
-              <p>Satisfied Clients</p>
-            </div>
-          </div>
         </div>
       </div>
     </section>

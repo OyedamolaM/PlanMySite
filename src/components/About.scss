@@ -1,0 +1,70 @@
+@import "../styles/variables.scss";
+
+.about {
+  padding: 5rem 2rem;
+  background: $light-bg;
+
+  .about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+
+    .about-text {
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: $primary-color;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .about-stats {
+        display: flex;
+        gap: 2rem;
+        margin: 2rem 0;
+        flex-wrap: wrap;
+
+        .stat {
+          h3 {
+            font-size: 2rem;
+            color: $primary-color;
+          }
+          p {
+            font-size: 0.9rem;
+            color: $dark-gray;
+          }
+        }
+      }
+
+      .about-btn {
+        margin-top: 1rem;
+        display: inline-block;
+      }
+    }
+
+    .about-image {
+      img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+
+      .about-stats {
+        justify-content: center;
+      }
+    }
+  }
+}

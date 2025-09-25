@@ -88,7 +88,7 @@ const businessPlans = [
 export default function Plans() {
   const [currencyPersonal, setCurrencyPersonal] = useState('NGN');
   const [currencyBusiness, setCurrencyBusiness] = useState('NGN');
-  const [domainSelected, setDomainSelected] = useState({}); // track personal domain toggles
+  const [domainSelected, setDomainSelected] = useState({}); // personal domain toggles
 
   const toggleCurrencyPersonal = () =>
     setCurrencyPersonal(currencyPersonal === 'NGN' ? 'USD' : 'NGN');
@@ -122,9 +122,9 @@ export default function Plans() {
           ))}
         </ul>
 
-        {/* Domain toggle switch */}
+        {/* Domain toggle as switch */}
         {plan.domainPriceNGN !== plan.basePriceNGN && (
-          <div className="domain-toggle-switch">
+          <div className="domain-toggle">
             <span>Add Custom Domain</span>
             <label className="switch">
               <input

@@ -99,7 +99,7 @@ export default function Contact() {
             <div className="map-container">
               <iframe
                 title="office-location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.123456!2d3.123456!3d6.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8c123456789%3A0x123456789abcdef!2sYour%20Office%20Address!5e0!3m2!1sen!2sng!4v1690000000000!5m2!1sen!2sng"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.3154!2d3.3623!3d6.5244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b8c123456789%3A0xabcdef123456!2s1%20Sunday%20Akinbo%20Street%2C%20Ipaja%2C%20Lagos%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1690000000000!5m2!1sen!2sng"
                 width="100%"
                 height="300"
                 style={{ border: 0 }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
@@ -11,11 +11,12 @@ const navLinks = [
 
 export default function Navbar() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setScrolled] = useState(false);
 
   const toggleMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
 
   const handleClick = (e, path) => {
-    // Smooth scroll for anchors
+    // Smooth scroll for anchor links
     if (path.includes("#")) {
       e.preventDefault();
       const id = path.split("#")[1];
@@ -25,8 +26,22 @@ export default function Navbar() {
     }
   };
 
+  // Detect scroll to apply "scrolled" class
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
       <div className="container">
         <div className="logo">PlanMySite</div>
 
@@ -34,10 +49,7 @@ export default function Navbar() {
         <ul className="nav-links">
           {navLinks.map((link, i) => (
             <li key={i}>
-              <Link
-                to={link.path}
-                onClick={(e) => handleClick(e, link.path)}
-              >
+              <Link to={link.path} onClick={(e) => handleClick(e, link.path)}>
                 {link.name}
               </Link>
             </li>
